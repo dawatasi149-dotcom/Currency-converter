@@ -1,5 +1,8 @@
-const BASE_URL =
-    "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies";
+
+
+
+
+const BASE_URL = "https://open.er-api.com/v6/latest"; 
 
 const dropdowns = document.querySelectorAll(".dropdown select");
 const btn = document.querySelector("form button");
@@ -8,7 +11,7 @@ const toCurr = document.querySelector(".to select");
 const msg = document.querySelector(".msg");
 
 for (let select of dropdowns) {
-  for (currCode in countryList) {
+  for (let currCode in countryList) { 
     let newOption = document.createElement("option");
     newOption.innerText = currCode;
     newOption.value = currCode;
@@ -32,10 +35,10 @@ const updateExchangeRate = async () => {
     amtVal = 1;
     amount.value = "1";
   }
-  const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}/${toCurr.value.toLowerCase()}.json`;
+  const URL = `${BASE_URL}/${fromCurr.value}`; 
   let response = await fetch(URL);
   let data = await response.json();
-  let rate = data[toCurr.value.toLowerCase()];
+  let rate = data.rates[toCurr.value]; 
 
   let finalAmount = amtVal * rate;
   msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
@@ -57,3 +60,4 @@ btn.addEventListener("click", (evt) => {
 window.addEventListener("load", () => {
   updateExchangeRate();
 });
+
